@@ -1,0 +1,87 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Post {
+  id: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  title: String!
+  content: String
+  published: Boolean
+  viewCount: Int!
+  author: User
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type User {
+  id: Int!
+  email: String!
+  name: String
+  posts: [Post!]
+}
+
+type Cat {
+  """Example field (placeholder)"""
+  id: Int!
+  name: String!
+  owner: User!
+}
+
+type Query {
+  cats: [Cat!]!
+  cat(id: Int!): Cat!
+  postById(id: Float!): Post
+  feed(searchString: String, skip: Float, take: Float, orderBy: PostOrderByUpdatedAtInput): [Post!]!
+  allUsers: [User!]
+  draftsByUser(userUniqueInput: UserUniqueInput!): [Post!]
+}
+
+input PostOrderByUpdatedAtInput {
+  updatedAt: SortOrder!
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input UserUniqueInput {
+  id: Float
+  email: String
+}
+
+type Mutation {
+  createCat(createCatInput: CreateCatInput!, ownerId: Float!): Cat!
+  updateCat(updateCatInput: UpdateCatInput!): Cat!
+  removeCat(id: Int!): Cat!
+  createDraft(data: PostCreateInput!, authorEmail: String!): Post!
+  incrementPostViewCount(id: Float!): Post!
+  togglePublishPost(id: Float!): Post
+  deletePost(id: Float!): Post
+  signupUser(data: UserCreateInput!): User!
+}
+
+input CreateCatInput {
+  name: String!
+}
+
+input UpdateCatInput {
+  name: String
+  id: Int!
+}
+
+input PostCreateInput {
+  title: String!
+  content: String
+}
+
+input UserCreateInput {
+  email: String!
+  name: String
+  posts: [PostCreateInput!]
+}
